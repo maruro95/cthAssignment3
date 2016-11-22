@@ -1,0 +1,15 @@
+{
+  "name": "client+serverapplication",
+  "version": "1.0.0",
+  "description": "imitation game",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Martin Roger Nkpwang Ze",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "socket.io": "^1.5.1"
+  }
+}

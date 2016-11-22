@@ -1,0 +1,59 @@
+<html>
+	<head>	
+		<title>TALK TO ME LOCALHOST</title>	
+		<style>
+			/* CSS Styling */
+			#frame {
+				width: 30em;
+			}
+			textarea {
+				width: 100%;
+				border: 1px solid #888;
+				padding: 3px;
+			}
+			#inputs, #text_field {
+				width: 100%;
+			}
+		</style>
+	</head>
+	<body>		
+		<!-- HTML -->
+		<label>Talk to me Localhost</label>
+		<div id="frame">
+
+			<!-- text area where the conversation is displayed -->
+			<textarea id="conversation" text="..." rows="10" cols="65">...</textarea>
+
+			<!-- inputs from human to send to server -->
+			<div id="inputs">
+				<label>To Localhost: </label>
+				<input id="text_field" type="text" onkeydown="enter_message();"/>
+				<input type="button" value="Send" onclick="send_message();"/>
+			</div>
+
+		</div>		
+
+		<!-- SCRIPTS -->
+		<!-- import socket.io -->
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+			// connect to localhost on its port (see server.js -- 8088)
+		  var socket = io().connect('http://localhost:8088');
+		  // when connecting 
+		  socket.on('connect', function (data) {
+		  	console.log('human connected');
+		  });
+		  // when receiving a custom message form the server ('message from robot')
+		  socket.on('message from robot', function(msg) {
+		  	document.getElementById("conversation").value += '> ' + msg + '\n';
+		  	console.log('robot message: ' + msg);
+		  });
+		  function send_message() {
+		  	var text = document.getElementById("text_field").value;
+		  	document.getElementById("conversation").value += '* ' + text + '\n';
+		  	socket.emit('message from human', text);
+		  	document.getElementById("text_field").value = '';
+		  }
+		</script>		
+	</body>
+</html>
